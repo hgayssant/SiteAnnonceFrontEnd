@@ -1,0 +1,37 @@
+<div class="jumbotron jumbotron-fluid teteAdmin">
+    <div class="container">
+        <h1 class="display-4">Page des catégories</h1>
+        <p class="lead">Bienvenue sur la page d'affichage de gestion des catégories.</p>
+    </div>
+</div>
+
+<table class="table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Id des annonces</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let c of listeCategorie">
+            <td>{{c.id}}</td>
+            <td>{{c.nom}}</td>
+            <td><span *ngFor="let a of c.annonces">{{a.id}} , </span></td>
+            <td><button class="badge badge-danger" (click)="supprimerCategorie(c.id)">Supprimer</button></td>
+            <td><button class="badge badge-warning"(click)="modifierCategorie(c)">Modifier</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<form (ngSubmit)="enregistrerCategorie()">
+    <input type="hidden" name="id" [(ngModel)]="categorie.id"> 
+    <label for="nom">Nom de la catégorie</label>
+    <input type="text" name="nom" [(ngModel)]="categorie.nom">
+    <button type="submi">Enregistrer</button>
+</form>
+
+<br>
+<p><a href="menuAdmin"><<< Menu Administrateur</a></p>

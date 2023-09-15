@@ -1,0 +1,58 @@
+<div class="jumbotron jumbotron-fluid teteAdmin">
+    <div class="container">
+        <h1 class="display-4">Page des utilisateurs</h1>
+        <p class="lead">Bienvenue sur la page d'affichage de gestion des utilisateurs.</p>
+    </div>
+</div>
+
+<table class="table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>mail</th>
+            <th>Role</th>
+            <th>Bloqué?</th>
+            <th>Annonces</th>
+            <th>Commentaires</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let u of listeUtilisateur">
+            <td>{{u.id}}</td>
+            <td>{{u.nom}}</td>
+            <td>{{u.prenom}}</td>
+            <td>{{u.mail}}</td>
+            <td><div *ngIf="u.role!=null">{{u.role.nom}}</div></td>
+            <td>{{u.bloque}}</td>
+            <td><button class="btn btn-outline-primary" (click)="afficherAnnonceUtilisateur(u.id)">Afficher les annonces</button></td>
+            <td><button class="btn btn-outline-primary" (click)="afficherCommentaireUtilisateur(u.id,u.nom)">Afficher les commentaires</button></td>
+            
+            <td><button class="badge badge-danger" (click)="supprimerUtilisateur(u.id)" >Supprimer</button></td>
+            <td><button class="badge badge-warning" (click)="modifierUtilisateur(u)" >Modifier</button></td>
+            <td><button  class="badge badge-success" (click)="bloquerUtilisateur(u)"  ><span *ngIf="!u.bloque; else isBloque">Bloquer</span></button></td>
+            <ng-template #isBloque>Débloquer </ng-template>
+        </tr>
+    </tbody>
+</table>
+
+<form (ngSubmit)="enregistrerUtilisateur()" >
+    <input type="hidden" name="id" [(ngModel)]="utilisateur.id"> 
+    <label for="nom">Nom</label>
+    <input type="text" name="nom" [(ngModel)]="utilisateur.nom">
+    <label for="prenom">Prenom</label>
+    <input type="text" name="prenom" [(ngModel)]="utilisateur.prenom">
+    <label for="mail">Mail</label>
+    <input type="text" name="mail" [(ngModel)]="utilisateur.mail">
+    
+    <label for="role">Role</label>
+    <select id="role" [(ngModel)]="utilisateur.role.id" name="role">
+        <option *ngFor="let r of listeRole" [value]="r.id">{{ r.nom }}</option>
+      </select>
+
+    <button type="submit">Enregistrer</button>
+</form>
+
+<br>
+<p><a href="menuAdmin"><<< Menu Administrateur</a></p>

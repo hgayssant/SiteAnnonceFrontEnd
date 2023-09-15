@@ -1,0 +1,30 @@
+<form (ngSubmit)="enregistrerAnnonce()">
+    <table>
+        <tr>
+            <td>
+                <label for="titre">Titre</label>
+                <input type="text" name="titre" [(ngModel)]="annonce.titre">
+            </td>
+            <td>
+                <label for="description">Description</label>
+                <input type="text" name="description" [(ngModel)]="annonce.description">
+            </td>
+            <td>
+                <label for="categorie">Categorie</label>
+                <select id="categorie" [(ngModel)]="annonce.categorie.id" name="categorie">
+                    <option *ngFor="let cat of listeCategorie" [value]="cat.id">{{ cat.nom }}</option>
+                </select>
+            </td>
+            <td>
+                <label for="image">Image</label>
+                <input type="text" name="image" [(ngModel)]="annonce.image">
+                <!-- <input type="file" (change)="onFileSelected($event)" />
+                <button (click)="upload()">Envoyer</button> -->
+            </td>
+        </tr>
+        <tr>
+            <td> <button type="submit">Enregistrer</button></td>
+        </tr>
+
+    </table>
+</form>

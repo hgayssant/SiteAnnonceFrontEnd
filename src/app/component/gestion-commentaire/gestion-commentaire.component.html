@@ -1,0 +1,58 @@
+<div class="jumbotron jumbotron-fluid teteAdmin">
+    <div class="container">
+        <h1 class="display-4">Page des commentaires</h1>
+        <p class="lead">Bienvenue sur la page d'affichage de gestion des commentaires.</p>
+    </div>
+</div>
+
+<table class="table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Texte</th>
+            <th>Utilisateur</th>
+            <th>Annonce</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let com of listeCommentaire">
+            <td>{{com.id}}</td>
+            <td>{{com.texte}}</td>
+            <td>{{com.utilisateur.username}}</td>
+            <td>#{{com.annonce.id}}</td>
+            <td><button class="badge badge-warning" (click)="modifierCommentaire(com)">Modifier</button></td>
+            <td><button class="badge badge-danger" (click)="supprimerCommentaire(com.id)">Supprimer</button></td>
+        </tr>
+    </tbody>
+</table>
+
+<form (ngSubmit)="enregistrerCommentaire()">
+    <input type="hidden" name="id" [(ngModel)]="commentaire.id">
+
+    <label for="texte">Texte </label>
+    <input type="text" name="texte" [(ngModel)]="commentaire.texte">
+    
+    <label for="annonce">Annonce </label>
+    <select [(ngModel)]="commentaire.annonce.id" name = "annonce">
+        <option *ngFor="let a of listeAnnonce" [value]="a.id">#{{a.id}}</option>
+    </select>
+    
+    <label for="utilisateur">Utilisateur </label>
+
+    <select [(ngModel)]="commentaire.utilisateur.id" name ="utilisateur">
+        <option *ngFor="let util of listeUtilisateur" [value]="util.id">{{util.username}}</option>
+    </select>
+
+    <input type="submit" value="Enregistrer">
+
+
+</form>
+
+<br>
+<p *ngIf="idcible==undefined;else isOther"><a href="menuAdmin"><<< Menu Administrateur</a></p>
+<ng-template #isOther>
+    <ng-container *ngIf="username!=undefined; else isAnnonce"><a href="afficherUtilisateur"><<< Menu Utilisateurs</a></ng-container>
+</ng-template>
+<ng-template #isAnnonce><a href="afficherAnnonce"><<< Menu Annonces</a></ng-template>

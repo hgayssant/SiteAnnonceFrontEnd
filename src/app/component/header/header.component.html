@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between" style="margin-bottom: 2%">
+    <a class="navbar-brand" href="Accueil">Accueil</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active"><a class="nav-link" href="annonces">Annonces </a></li>
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Catégories </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                    <span><a *ngFor="let cat of listeCategorie" class="dropdown-item" href="">{{cat.nom}}</a>
+                    </span>
+                </div>
+            </li>
+            <li class="nav-item"><a *ngIf="user!=undefined && user.role.nom=='ADMIN'" href="menuAdmin" class="nav-link">Page Admin </a></li>
+            <ng-template></ng-template>
+
+        </ul>
+        <div>
+
+ 
+                <a *ngIf="user==undefined; else isConnected" href="login">Se connecter</a>
+
+
+            <ng-template #isConnected>
+                Bonjour {{user.username}} <br>
+                <a href="">Espace personnel</a> <br>
+                <a href="javascript:void(0);" (click)="deconnection()">Se déconnecter</a>
+            </ng-template>
+        </div>
+    </div>
+</nav>

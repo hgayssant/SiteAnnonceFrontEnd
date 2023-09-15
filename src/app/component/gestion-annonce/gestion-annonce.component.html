@@ -1,0 +1,104 @@
+<div class="jumbotron jumbotron-fluid teteAdmin">
+    <div class="container">
+        <h1 class="display-4">Page des annonces</h1>
+        <p class="lead">Bienvenue sur la page d'affichage de gestion des annonces.</p>
+    </div>
+</div>
+
+<table class="table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Catégorie</th>
+            <th>Validé?</th>
+            <th>Image</th>
+            <th>Date de publication</th>
+            <th>Date d'expiration</th>
+            <th>Utilisateur</th>
+            <th>Commentaires</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let a of listeAnnonce">
+            <td>{{a.id}}</td>
+            <td>{{a.titre}}</td>
+            <td>{{a.description}}</td>
+            <td>{{a.categorie.nom}}</td>
+            <td>{{a.valide}}</td>
+            <td>{{a.image}}</td>
+            <td>{{a.datePublication}}</td>
+            <td>{{a.dateExpiration}}</td>
+            <td>{{a.utilisateur.username}}</td>
+            <td><button class="btn btn-outline-primary" (click)="afficherCommentaire(a.id)">Afficher les commentaires</button></td>
+            <td><button class="badge badge-danger" (click)="supprimerAnnonce(a.id)">Supprimer</button></td>
+            <td><button class="badge badge-warning" (click)="modifierAnnonce(a)">Modifier</button></td>
+            <td><button class="badge badge-success" (click)="validerAnnonce(a)"><span *ngIf="a.valide==false; else isValide">Valider</span></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<ng-template #isValide>Bloquer</ng-template>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<form (ngSubmit)="enregistrerAnnonce()">
+    <table>
+        <tr>
+            <input type="hidden" name="id" [(ngModel)]="annonce.id">
+            <td>
+                <label for="titre">Titre</label>
+                <input type="text" name="titre" [(ngModel)]="annonce.titre">
+            </td>
+            <td>
+                <label for="description">Description</label>
+                <input type="text" name="description" [(ngModel)]="annonce.description">
+            </td>
+            <td>
+                <label for="categorie">Categorie</label>
+                <select id="categorie" [(ngModel)]="annonce.categorie.id" name="categorie">
+                    <option *ngFor="let cat of listeCategorie" [value]="cat.id">{{ cat.nom }}</option>
+                </select>
+            </td>
+            <td>
+                <label for="image">Image</label>
+                <input type="text" name="image" [(ngModel)]="annonce.image">
+            </td>
+        </tr>
+        <tr>
+            <td>
+
+                <label for="datePublication">Date de publication</label>
+                <input type="date" name="datePublication" [(ngModel)]="annonce.datePublication">
+            </td>
+            <td>
+                <label for="dateExpiration">Date d'expiration</label>
+                <input type="date" name="dateExpiration" [(ngModel)]="annonce.dateExpiration">
+            </td>
+            <td>
+                <label for="utilisateur">Utilisateur</label>
+                <select id="utilisateur" [(ngModel)]="annonce.utilisateur.id" name="utilisateur">
+                    <option *ngFor="let util of listeUtilisateur" [value]="util.id">{{ util.nom }}</option>
+                </select>
+            </td>
+            <td> <button type="submit">Enregistrer</button></td>
+        </tr>
+
+    </table>
+</form>
+<br>
+<br>
+<p><a *ngIf="idcible!=undefined;else isAll" href="afficherUtilisateur">
+        <<< Menu Utilisateurs</a>
+</p>
+
+<ng-template #isAll><a href="menuAdmin">
+        <<< Menu Administrateur</a></ng-template>
